@@ -9,7 +9,8 @@ class Deck:
     def __init__(self):
         self.cards = []
         for i in ['A',2,3,4,5,6,7,8,9,10,'J','Q','K']:
-            for j in ['clubs', 'hearts', 'diamonds', 'spades']:
+            #for j in ['clubs', 'hearts', 'diamonds', 'spades']:
+            for j in ['♣', '♡', '♢', '♠']:
                 self.cards.append(Card(i, j))
 
     def shuffle(self):
@@ -22,17 +23,40 @@ class Deck:
         self.cards = self.cards[card_number:]
         
         return(drawn)
+
+class Hand:
+    def __init__(self, card_number):
+        deck = Deck()
+        deck.shuffle()
+        self.cards = deck.drawing(card_number)
+
+    def heapSort():
+        #TODO
+        return 
+    def binarySort():
+        #TODO
+        return
+    def mergeSort():
+        #TODO
+        return
+    def otherSort():
+        #TODO
+        return
+    
+    def pokerDetection():
+        #TODO
+        return
     
 def swap(n, m):
     return m, n
 
-deck = Deck()
+card_number = int(input('Insert the number of cards in the hand: '))
 
-deck.shuffle()
+hand = Hand(card_number)
 
-hand = deck.drawing(5)
+print(len(hand.cards))
 
-for card in hand:
+for card in hand.cards:
     print(card.value, card.suit)
 
 
