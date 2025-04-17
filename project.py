@@ -2,13 +2,19 @@ from random import randint
 
 class Card:
     def __init__(self, value, suit):
+        """
+        Adds two numbers together .
+        Parameters :
+            Value (str): The value of the card .
+            Suit (str): The suit of the card ('♣', '♡', '♢' or '♠') .
+        """
         self.value = value
         self.suit = suit
 
 class Deck:
     def __init__(self):
         self.cards = []
-        for i in ['A',2,3,4,5,6,7,8,9,10,'J','Q','K']:
+        for i in ['A','2','3','4','5','6','7','8','9','10','J','Q','K']:
             #for j in ['clubs', 'hearts', 'diamonds', 'spades']:
             for j in ['♣', '♡', '♢', '♠']:
                 self.cards.append(Card(i, j))
