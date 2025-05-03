@@ -51,8 +51,6 @@ class Hand:
     
     def pokerDetection():
         #TODO
-
-        print()
         return
     
 def swap(n, m):
