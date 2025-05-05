@@ -40,7 +40,7 @@ class Hand:
         #TODO
         return 
     def binarySort():
-        #TODO
+        #checking if this works
         return
     def mergeSort():
         #TODO
