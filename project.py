@@ -74,27 +74,21 @@ class Hand:
 
 def find_pair(lst):
     i = 0
+    firstPair = -1
     while True:
         if i >= len(lst):
             break
         elif i+1 < len(lst) and lst[i].value ==  lst[i+1].value:
             print(f'One Pair of {lst[i].value}')
-            #find_twopair(lst)
+            if firstPair != -1:
+                print(f'Two Pairs of {lst[firstPair].value} and {lst[i].value}')
+                firstPair = -1
+            firstPair = i
             i += 2
         else:
             i += 1
 
-    
-    '''
-    for i in lst:
-        for j in lst:
-            if i.value == j.value:
-                print(f'One Pair of {i.value}')
-                find_twopair(lst)'''
 
-
-def find_twopair(lst):
-    print('Right')
 
 def swap(n, m):
     return m, n
