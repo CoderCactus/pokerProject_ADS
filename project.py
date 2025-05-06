@@ -7,10 +7,11 @@ class Card:
         Parameters :
             Value (str): The value of the card ('A','2','3','4','5','6','7','8','9','10','J','Q','K').
             Suit (str): The suit of the card ('♣', '♡', '♢' or '♠').
+
         """
         self.value = value
         self.suit = suit
-        
+
         if self.value == 'A':
             self.numericValue = 1
         elif self.value == 'J':
@@ -46,6 +47,9 @@ class Hand:
         deck = Deck()
         deck.shuffle()
         self.cards = deck.drawing(card_number)
+
+    def discard(self):
+        self.cards = []
 
     def heapSort():
         #TODO
