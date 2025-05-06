@@ -5,11 +5,22 @@ class Card:
         """
         Adds two numbers together .
         Parameters :
-            Value (str): The value of the card .
-            Suit (str): The suit of the card ('♣', '♡', '♢' or '♠') .
+            Value (str): The value of the card ('A','2','3','4','5','6','7','8','9','10','J','Q','K').
+            Suit (str): The suit of the card ('♣', '♡', '♢' or '♠').
         """
         self.value = value
         self.suit = suit
+        
+        if self.value == 'A':
+            self.numericValue = 1
+        elif self.value == 'J':
+            self.numericValue = 11
+        elif self.value == 'Q':
+            self.numericValue = 12
+        elif self.value == 'K':
+            self.numericValue = 13
+        else:
+            self.numericValue = self.value
 
 class Deck:
     def __init__(self):
