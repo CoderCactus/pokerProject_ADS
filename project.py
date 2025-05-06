@@ -64,11 +64,10 @@ class Hand:
         #TODO
         return
     
-    def pokerDetection():
+    def pokerDetection(self):
         #TODO
-
-        hand.cards = [Card('A', 'spades'), Card('A', 'clubs'), Card('2', 'apades'), Card('2', 'diamonds')]
-
+        find_pair(self.cards)
+        find_threes(self.cards)
 
         return
 
@@ -80,11 +79,22 @@ def find_pair(lst):
             break
         elif i+1 < len(lst) and lst[i].value ==  lst[i+1].value:
             print(f'One Pair of {lst[i].value}')
-            if firstPair != -1:
+            if firstPair != -1 and lst[firstPair].value != lst[i].value:
                 print(f'Two Pairs of {lst[firstPair].value} and {lst[i].value}')
                 firstPair = -1
             firstPair = i
             i += 2
+        else:
+            i += 1
+
+def find_threes(lst):
+    i = 0
+    while True:
+        if i >= len(lst):
+            break
+        elif i+2 < len(lst) and lst[i].value ==  lst[i+1].value and  lst[i].value ==  lst[i+2].value:
+            print(f'Three of a Kind of {lst[i].value}')
+            i += 3
         else:
             i += 1
 
@@ -93,13 +103,17 @@ def find_pair(lst):
 def swap(n, m):
     return m, n
 
-#card_number = int(input('Insert the number of cards in the hand: '))
+card_number = 4 #int(input('Insert the number of cards in the hand: '))
 
-#hand = Hand(card_number)
+hand = Hand(card_number)
+hand.cards = [Card('A', 'spades'), Card('A', 'clubs'), Card('2', 'spades'), Card('2', 'diamonds'), Card('2', 'hearts')]
 
 #print(len(hand.cards))
 
-#for card in hand.cards:
-#   print(card.value, card.suit)
-find_pair([Card('A', 'spades'), Card('A', 'clubs'), Card('2', 'apades'), Card('2', 'diamonds')])
+for card in hand.cards:
+   print(card.value, card.suit)
+
+hand.pokerDetection()
+
+#find_pair([Card('A', 'spades'), Card('A', 'clubs'), Card('2', 'apades'), Card('2', 'diamonds')])
 
