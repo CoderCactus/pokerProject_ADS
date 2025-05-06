@@ -66,19 +66,46 @@ class Hand:
     
     def pokerDetection():
         #TODO
+
+        hand.cards = [Card('A', 'spades'), Card('A', 'clubs'), Card('2', 'apades'), Card('2', 'diamonds')]
+
+
         return
+
+def find_pair(lst):
+    i = 0
+    while True:
+        if i >= len(lst):
+            break
+        elif i+1 < len(lst) and lst[i].value ==  lst[i+1].value:
+            print(f'One Pair of {lst[i].value}')
+            #find_twopair(lst)
+            i += 2
+        else:
+            i += 1
+
     
+    '''
+    for i in lst:
+        for j in lst:
+            if i.value == j.value:
+                print(f'One Pair of {i.value}')
+                find_twopair(lst)'''
+
+
+def find_twopair(lst):
+    print('Right')
+
 def swap(n, m):
     return m, n
 
-card_number = int(input('Insert the number of cards in the hand: '))
+#card_number = int(input('Insert the number of cards in the hand: '))
 
-hand = Hand(card_number)
+#hand = Hand(card_number)
 
-print(len(hand.cards))
+#print(len(hand.cards))
 
-for card in hand.cards:
-    print(card.value, card.suit)
-
-
+#for card in hand.cards:
+#   print(card.value, card.suit)
+find_pair([Card('A', 'spades'), Card('A', 'clubs'), Card('2', 'apades'), Card('2', 'diamonds')])
 
