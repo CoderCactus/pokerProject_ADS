@@ -21,7 +21,7 @@ class Card:
         elif self.value == 'K':
             self.numericValue = 13
         else:
-            self.numericValue = self.value
+            self.numericValue = int(self.value)
 
 class Deck:
     def __init__(self):
@@ -68,6 +68,7 @@ class Hand:
         #TODO
         find_pair(self.cards)
         find_threes(self.cards)
+        find_straight(self.cards)
 
         return
 
@@ -98,7 +99,11 @@ def find_threes(lst):
         else:
             i += 1
 
-
+def find_straight(lst):
+    for i in range(len(lst)-4):
+        if lst[i].numericValue + 4 == lst[i+1].numericValue + 3 == lst[i+2].numericValue + 2  == lst[i+3].numericValue + 1 == lst[i+4].numericValue:
+            print(f'Straight between {lst[i].value} and {lst[i+4].value}')
+            
 
 def swap(n, m):
     return m, n
@@ -106,7 +111,7 @@ def swap(n, m):
 card_number = 4 #int(input('Insert the number of cards in the hand: '))
 
 hand = Hand(card_number)
-hand.cards = [Card('A', 'spades'), Card('A', 'clubs'), Card('2', 'spades'), Card('2', 'diamonds'), Card('2', 'hearts')]
+hand.cards = [Card('A', 'spades'), Card('2', 'clubs'), Card('3', 'spades'), Card('4', 'diamonds'), Card('5', 'hearts')]
 
 #print(len(hand.cards))
 
@@ -114,6 +119,3 @@ for card in hand.cards:
    print(card.value, card.suit)
 
 hand.pokerDetection()
-
-#find_pair([Card('A', 'spades'), Card('A', 'clubs'), Card('2', 'apades'), Card('2', 'diamonds')])
-
