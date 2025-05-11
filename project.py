@@ -69,6 +69,7 @@ class Hand:
         find_pair(self.cards)
         find_threes(self.cards)
         find_straight(self.cards)
+        find_flush(self.cards)
 
         return
 
@@ -103,6 +104,16 @@ def find_straight(lst):
     for i in range(len(lst)-4):
         if lst[i].numericValue + 4 == lst[i+1].numericValue + 3 == lst[i+2].numericValue + 2  == lst[i+3].numericValue + 1 == lst[i+4].numericValue:
             print(f'Straight between {lst[i].value} and {lst[i+4].value}')
+
+def find_flush(lst):
+    for i in ['♣', '♡', '♢', '♠']:
+        count = 0
+        for j in lst:
+            if j.suit == i:
+                count += 1
+            if count == 4:
+                print(f'Flush of {i}')
+
             
 
 def swap(n, m):
@@ -111,7 +122,7 @@ def swap(n, m):
 card_number = 4 #int(input('Insert the number of cards in the hand: '))
 
 hand = Hand(card_number)
-hand.cards = [Card('A', 'spades'), Card('2', 'clubs'), Card('3', 'spades'), Card('4', 'diamonds'), Card('5', 'hearts')]
+hand.cards = [Card('A', '♠'), Card('2', '♠'), Card('3', '♠'), Card('4', '♠'), Card('5', '♠')]
 
 #print(len(hand.cards))
 
