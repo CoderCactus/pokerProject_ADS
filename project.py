@@ -78,30 +78,39 @@ class Hand:
 
         
         if royalFlush != False:
+            hand_tally['royalFlush'] += 1
             print(f'Royal Straight of {royalFlush}')
         
         if straightFlush != False:
+            hand_tally['straightFlush'] += 1
             print(f'Straight Flush of {straightFlush[0][0].value} to {straightFlush[0][-1].value} and suit {straightFlush[1]}')
 
         if fourKind != False:
+            hand_tally['fourKind'] += 1
             print(f'Four of a Kind of {fourKind}')
 
         if fullHouse != False:
-            print(f'Found a full house of {fullHouse}')
+            hand_tally['fullHouse'] += 1
+            print(f'Found a full house of {fullHouse[0]} and {fullHouse[1]}')
 
         if flush != False:
+            hand_tally['flush'] += 1
             print(f'Flush of {flush}')
 
         if straight != False:
+            hand_tally['straight'] += 1
             print(f'Straight between {straight[0].value} and {straight[-1].value}')
 
         if threeKind != False:
-            print(f'Tree of a Kind of {threeKind}')
+            hand_tally['threeKind'] += 1
+            print(f'Three of a Kind of {threeKind}')
 
         if twoPairs != False:
+            hand_tally['twoPairs'] += 1
             print(f'Two pairs of {twoPairs[0]} and {twoPairs[1]}')
 
         if pair != False:
+            hand_tally['pair'] += 1
             print(f'One Pair of {pair}')
         
 
@@ -156,17 +165,20 @@ def find_flush(lst):
         for j in lst:
             if j.suit == i:
                 count += 1
-            if count == 4:
+            if count == 5:
                 return i
     return False
         
 def find_fullHouse(lst):
-    pair = find_pair(lst)
     three = find_threeKind(lst)
-    if find_pair(lst) and find_threeKind(lst):
-        return pair, three
-    else:
+    if not three:
         return False
+    remaining_cards = [i for i in lst if i.value != three]
+    pair = find_pair(remaining_cards)
+    if pair:
+        return pair, three
+    
+    return False
 
 def find_fourKind(lst):
     i = 0
@@ -181,7 +193,9 @@ def find_fourKind(lst):
 
 def find_straightFlush(lst):
     straight = find_straight(lst)
-
+    if not straight:
+        return False
+    
     flush = find_flush(straight)
 
     if flush != False:
@@ -191,8 +205,12 @@ def find_straightFlush(lst):
 
 def find_royalFlush(lst):
     straightFlush = find_straightFlush(lst)
+
+    if not straightFlush:
+        return False
+    
     values = [i.value for i in straightFlush[0]]
-    if straightFlush and values == ['10','J', 'Q', 'K', 'A'] :
+    if values == ['10','J', 'Q', 'K', 'A'] :
         return straightFlush[1]
     
     return False
@@ -202,15 +220,24 @@ def find_royalFlush(lst):
 def swap(n, m):
     return m, n
 
-card_number = 5 #int(input('Insert the number of cards in the hand: '))
+hand_tally = {'pair': 0, 
+              'twoPairs': 0, 
+              'threeKind': 0, 
+              'straight': 0, 
+              'flush': 0, 
+              'fullHouse': 0, 
+              'fourKind': 0, 
+              'straightFlush': 0, 
+              'royalFlush': 0}
+card_number = 20 #int(input('Insert the number of cards in the hand: '))
 
 hand = Hand(card_number)
-hand.cards = [Card('10', '♠'), Card('J', '♠'), Card('Q', '♠'), Card('K', '♠'), Card('A', '♠')]
+#hand.cards = [Card('A', '♠'), Card('A', '♠'), Card('A', '♠'), Card('3', '♠'), Card('4', '♠')]
 
 #print(len(hand.cards))
 
 #Only for testing Purposes
-#hand.cards = sorted(hand.cards , key=lambda x: x.numericValue)
+hand.cards = sorted(hand.cards , key=lambda x: x.numericValue)
 
 for card in hand.cards:
    print(card.value, card.suit)
