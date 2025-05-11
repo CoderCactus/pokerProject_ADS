@@ -78,17 +78,18 @@ class Hand:
 
         '''
         if royalFlush != False:
-            print()
+            #TODO
 
         if straightFlush != False:
-            print()
+            #TODO
 
-        if fourKind != False:
-            print()
         '''
+        if fourKind != False:
+            #TODO
+            print(f'Four of a Kind of {fourKind}')
 
         if fullHouse != False:
-            print(print(f'Found a full house of {fullHouse}'))
+            print(f'Found a full house of {fullHouse}')
 
         if flush != False:
             print(f'Flush of {flush}')
@@ -105,7 +106,6 @@ class Hand:
         if pair != False:
             print(f'One Pair of {pair}')
         
-        return
 
 def find_pair(lst):
     i = 0
@@ -172,7 +172,15 @@ def find_fullHouse(lst):
         return False
 
 def find_fourKind(lst):
-    return
+    i = 0
+    while True:
+        if i >= len(lst):
+            break
+        elif i+1 < len(lst) and lst[i].value ==  lst[i+3].value:
+            return lst[i].value
+        else:
+            i += 4
+    return False
 
 def find_straightFlush(lst):
     return
@@ -188,12 +196,12 @@ def swap(n, m):
 card_number = 5 #int(input('Insert the number of cards in the hand: '))
 
 hand = Hand(card_number)
-#hand.cards = [Card('2', '♠'), Card('2', '♠'), Card('3', '♠'), Card('K', '♠'), Card('K', '♠')]
+hand.cards = [Card('2', '♠'), Card('2', '♠'), Card('2', '♠'), Card('2', '♠'), Card('K', '♠')]
 
 #print(len(hand.cards))
 
 #Only for testing Purposes
-hand.cards = sorted(hand.cards , key=lambda x: x.numericValue)
+#hand.cards = sorted(hand.cards , key=lambda x: x.numericValue)
 
 for card in hand.cards:
    print(card.value, card.suit)
