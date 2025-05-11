@@ -79,11 +79,10 @@ class Hand:
         '''
         if royalFlush != False:
             #TODO
-
-        if straightFlush != False:
-            #TODO
-
         '''
+        if straightFlush != False:
+            print(f'Straight Flush of {straightFlush[0][0].value} to {straightFlush[0][-1].value} and suit {straightFlush[1]}')
+
         if fourKind != False:
             #TODO
             print(f'Four of a Kind of {fourKind}')
@@ -95,7 +94,7 @@ class Hand:
             print(f'Flush of {flush}')
 
         if straight != False:
-            print(f'Straight between {straight[0]} and {straight[1]}')
+            print(f'Straight between {straight[0].value} and {straight[-1].value}')
 
         if threeKind != False:
             print(f'Tree of a Kind of {threeKind}')
@@ -149,7 +148,7 @@ def find_straight(lst):
         if lst[i].numericValue + 4 == lst[i+1].numericValue + 3 == lst[i+2].numericValue + 2  == lst[i+3].numericValue + 1 == lst[i+4].numericValue or (
           lst[i].numericValue + 3 == lst[i+1].numericValue + 2  == lst[i+2].numericValue + 1 == lst[i+3].numericValue and lst[i+4].value == 'A'  
         ) :
-            return lst[i].value, lst[i+4].value
+            return lst[i:i+5]
     return False
 
 def find_flush(lst):
@@ -162,7 +161,6 @@ def find_flush(lst):
                 return i
     return False
         
-
 def find_fullHouse(lst):
     pair = find_pair(lst)
     three = find_threeKind(lst)
@@ -183,7 +181,14 @@ def find_fourKind(lst):
     return False
 
 def find_straightFlush(lst):
-    return
+    straight = find_straight(lst)
+
+    flush = find_flush(straight)
+
+    if flush != False:
+        return straight, flush
+    
+    return False
 
 def find_royalFlush(lst):
     return
@@ -196,7 +201,7 @@ def swap(n, m):
 card_number = 5 #int(input('Insert the number of cards in the hand: '))
 
 hand = Hand(card_number)
-hand.cards = [Card('2', '♠'), Card('2', '♠'), Card('2', '♠'), Card('2', '♠'), Card('K', '♠')]
+hand.cards = [Card('2', '♠'), Card('3', '♠'), Card('4', '♠'), Card('5', '♠'), Card('6', '♠')]
 
 #print(len(hand.cards))
 
