@@ -76,15 +76,14 @@ class Hand:
         twoPairs = find_twoPairs(self.cards)
         pair = find_pair(self.cards)
 
-        '''
+        
         if royalFlush != False:
-            #TODO
-        '''
+            print(f'Royal Straight of {royalFlush}')
+        
         if straightFlush != False:
             print(f'Straight Flush of {straightFlush[0][0].value} to {straightFlush[0][-1].value} and suit {straightFlush[1]}')
 
         if fourKind != False:
-            #TODO
             print(f'Four of a Kind of {fourKind}')
 
         if fullHouse != False:
@@ -191,7 +190,12 @@ def find_straightFlush(lst):
     return False
 
 def find_royalFlush(lst):
-    return
+    straightFlush = find_straightFlush(lst)
+    values = [i.value for i in straightFlush[0]]
+    if straightFlush and values == ['10','J', 'Q', 'K', 'A'] :
+        return straightFlush[1]
+    
+    return False
 
             
 
@@ -201,7 +205,7 @@ def swap(n, m):
 card_number = 5 #int(input('Insert the number of cards in the hand: '))
 
 hand = Hand(card_number)
-hand.cards = [Card('2', '♠'), Card('3', '♠'), Card('4', '♠'), Card('5', '♠'), Card('6', '♠')]
+hand.cards = [Card('10', '♠'), Card('J', '♠'), Card('Q', '♠'), Card('K', '♠'), Card('A', '♠')]
 
 #print(len(hand.cards))
 
