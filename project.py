@@ -190,7 +190,7 @@ def find_fourKind(lst):
     while True:
         if i >= len(lst):
             break
-        elif i+2< len(lst) and lst[i].value ==  lst[i+3].value:
+        elif i+3 < len(lst) and lst[i].value ==  lst[i+3].value:
             return lst[i].value
         else:
             i += 4
@@ -240,8 +240,6 @@ def heapify(array, n, i):
         heapify(array, n, parent)
 
 
-card_number = int(input('Insert the number of cards in the hand: '))
-
 hand_tally = {'pair': 0, 
               'twoPairs': 0, 
               'threeKind': 0, 
@@ -269,42 +267,49 @@ hand.pokerDetection()
 
 
 while True:
-    while True:
-        try:
-            card_number = int(input('Insert the number of cards in the hand: '))
-            if card_number > 0:
-                break
-            else:
-                print('Please enter a positive number.')
-        except ValueError:
-            print('Invalid input. Please enter a valid number.')
+    try:
+        # Validate card_number
+        card_number_input = input('Insert the number of cards in the hand: ')
+        
+        card_number = int(card_number_input)
+        if card_number <= 0:
+            print('Please enter a positive number.')
+            continue
+        if card_number > 52:
+            print('Please enter a number less than or equal to 52.')
+            continue
 
-    hand = Hand(card_number)
-    
-    while True:
-        try:
-            sorting_method = int(input('Select sorting method: (1- Heap Sort; 2- Binary Sort; 3- Merge Sort; 4- Other): '))
-            if sorting_method in [1, 2, 3, 4]:
-                break
-            else:
-                print('Invalid choice. Please select a number between 1 and 4.')        
-        except ValueError:
-            print('Invalid input. Please enter a valid number.')
+        # Validate sorting_method
+        sorting_method_input = input('Select sorting method: (1- Heap Sort; 2- Binary Sort; 3- Merge Sort; 4- Other): ')
+        sorting_method = int(sorting_method_input)
+        if sorting_method not in [1, 2, 3, 4]:
+            print('Invalid choice. Please select a number between 1 and 4.')
+            continue
 
-    if sorting_method == 1:
-        hand.heapSort()
-    elif sorting_method == 2:
-        hand.binarySort()
-    elif sorting_method == 3:
-        hand.mergeSort()
-    elif sorting_method == 4:
-        hand.cards = sorted(hand.cards , key=lambda x: x.numericValue)
+        # If both inputs are valid, proceed
+        hand = Hand(card_number)
 
-    hand.pokerDetection()
+        if sorting_method == 1:
+            hand.heapSort()
+        elif sorting_method == 2:
+            hand.binarySort()
+        elif sorting_method == 3:
+            hand.mergeSort()
+        elif sorting_method == 4:
+            hand.cards = sorted(hand.cards, key=lambda x: x.numericValue) #ONLY FOR TESTING
 
-    print('Combination Tally: ')
-    for combination in hand_tally.keys():
-        print(f'{combination}: {hand_tally[combination]}') 
-    
-    if input('Do you want to continue?(yes/no) ') != 'yes':
-        break
+        for card in hand.cards:
+            print(card.value, card.suit)
+
+        hand.pokerDetection()
+
+        print('Combination Tally: ')
+        for combination in hand_tally.keys():
+            print(f'{combination}: {hand_tally[combination]}') 
+        
+        if input('Do you want to continue? (yes/no): ').lower() != 'yes':
+            print('Exiting the program. Goodbye!')
+            break
+
+    except ValueError:
+        print('Invalid input. Please enter a valid number.')
