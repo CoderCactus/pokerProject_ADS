@@ -42,21 +42,26 @@ class Deck:
         
         return(drawn)
 
+
 class Hand:
     def __init__(self, card_number):
         deck = Deck()
         deck.shuffle()
         self.cards = deck.drawing(card_number)
-
+        
+    def heapSort(self):
+        n = len(self.cards)
+        for i in range(n//2 - 1, -1, -1):
+            heapify(self.cards, n, i)
+        for i in range(n-1, 0, -1):
+            self.cards[0], self.cards[i] = self.cards[i], self.cards[0]  
+            heapify(self.cards, i, 0)
+     
+    def binarySort(self):
+        return
     def discard(self):
         self.cards = []
 
-    def heapSort(self):
-        #TODO
-        return 
-    def binarySort(self):
-        #TODO
-        return
     def mergeSort(self):
         #TODO
         return
@@ -218,6 +223,25 @@ def find_royalFlush(lst):
 def swap(n, m):
     return m, n
 
+
+def heapify(array, n, i):
+    parent = i
+    left = 2*i+1
+    right = 2*i+2
+
+    if left < n and array[left].numericValue > array[parent].numericValue:
+        parent = left
+
+    if right < n and array[right].numericValue > array[parent].numericValue:
+        parent = right
+
+    if parent != i:
+        array[i], array[parent] = array[parent], array[i]
+        heapify(array, n, parent)
+
+
+card_number = int(input('Insert the number of cards in the hand: '))
+
 hand_tally = {'pair': 0, 
               'twoPairs': 0, 
               'threeKind': 0, 
@@ -229,16 +253,13 @@ hand_tally = {'pair': 0,
               'royalFlush': 0}
 
 #Only for testing Purposes
+
 '''
 card_number = 20 #int(input('Insert the number of cards in the hand: '))
 
+
 hand = Hand(card_number)
 #hand.cards = [Card('A', '♠'), Card('A', '♠'), Card('A', '♠'), Card('3', '♠'), Card('4', '♠')]
-
-#print(len(hand.cards))
-
-
-hand.cards = sorted(hand.cards , key=lambda x: x.numericValue)
 
 for card in hand.cards:
    print(card.value, card.suit)
