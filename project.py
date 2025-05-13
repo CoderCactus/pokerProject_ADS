@@ -65,9 +65,20 @@ class Hand:
     def mergeSort(self):
         #TODO
         return
-    def otherSort(self):
-        #TODO
-        return
+    def insertionSort(self):
+        for i in range(1, len(self.cards)):
+            current_card = self.cards[i]
+            j = i - 1
+            
+            # Shift larger cards to the right
+            while j >= 0 and current_card.numericValue < self.cards[j].numericValue:
+                self.cards[j + 1] = self.cards[j]
+                j -= 1
+            
+            # Insert the current card at the correct position
+            self.cards[j + 1] = current_card
+        
+        return self.cards
     
     def pokerDetection(self):
         #TODO
@@ -296,13 +307,14 @@ while True:
         elif sorting_method == 3:
             hand.mergeSort()
         elif sorting_method == 4:
-            hand.cards = sorted(hand.cards, key=lambda x: x.numericValue) #ONLY FOR TESTING
-
+            #hand.cards = sorted(hand.cards, key=lambda x: x.numericValue) #ONLY FOR TESTING
+            hand.insertionSort()
+        
         for card in hand.cards:
             print(card.value, card.suit)
 
         hand.pokerDetection()
-
+        
         print('Combination Tally: ')
         for combination in hand_tally.keys():
             print(f'{combination}: {hand_tally[combination]}') 
