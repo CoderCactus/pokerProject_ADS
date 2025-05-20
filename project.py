@@ -1,3 +1,4 @@
+import streamlit as st
 from random import randint
 
 class Card:
@@ -325,3 +326,80 @@ while True:
 
     except ValueError:
         print('Invalid input. Please enter a valid number.')
+        # Show tally chart
+st.subheader("Poker Hand Frequency (Session)")
+st.bar_chart(hand_tally)
+
+
+# Streamlit Interface
+def main():
+    st.title("🎴 Poker Hand Simulator")
+
+    card_number = st.number_input(
+        'Select number of cards (max 52):',
+        min_value=1,
+        max_value=52,
+        value=5
+    )
+
+    sorting_option = st.selectbox(
+        'Choose sorting method:',
+        options=[
+            'Heap Sort',
+            'Binary Sort',
+            'Merge Sort',
+            'Insertion Sort'
+        ]
+    )
+
+    if st.button('Draw Cards and Detect Poker Hand'):
+        hand = Hand(card_number)
+
+        # Apply selected sorting
+        if sorting_option == 'Heap Sort':
+            hand.heapSort()
+        elif sorting_option == 'Binary Sort':
+            hand.binarySort()
+        elif sorting_option == 'Merge Sort':
+            hand.mergeSort()
+        elif sorting_option == 'Insertion Sort':
+            hand.insertionSort()
+
+        # Show cards
+        st.subheader("Your Hand:")
+        cols = st.columns(min(card_number, 10))
+        for i, card in enumerate(hand.cards):
+            image_url = get_card_image_url(card)
+            cols[i % len(cols)].image(image_url, caption=f"{card.value} {card.suit}", width=80)
+
+
+        # Run detection and show results
+        st.subheader("Poker Hand Detected:")
+        # Redirect `print` to st.write
+        from io import StringIO
+        import sys
+        old_stdout = sys.stdout
+        result = StringIO()
+        sys.stdout = result
+        hand.pokerDetection()
+        sys.stdout = old_stdout
+        st.text(result.getvalue())
+
+        # Tally
+        st.subheader("Combination Tally")
+        for k, v in hand_tally.items():
+            st.write(f"{k}: {v}")
+
+if __name__ == '__main__':
+    main()
+def get_card_image_url(card):
+    """Returns a URL for the image of the given card."""
+    value_map = {'A': 'A', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7',
+                 '8': '8', '9': '9', '10': '0', 'J': 'J', 'Q': 'Q', 'K': 'K'}
+    suit_map = {'♣': 'C', '♡': 'H', '♢': 'D', '♠': 'S'}
+
+    value = value_map[card.value]
+    suit = suit_map[card.suit]
+    
+    # Uses GitHub-hosted playing cards
+    return f"https://deckofcardsapi.com/static/img/{value}{suit}.png"
