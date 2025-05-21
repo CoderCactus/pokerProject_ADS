@@ -58,8 +58,22 @@ class Hand:
             self.cards[0], self.cards[i] = self.cards[i], self.cards[0]  
             heapify(self.cards, i, 0)
      
-    def binarySort(self):
-        return
+   def binarySort(self, cards=None):
+        if cards is None:
+            cards = self.cards
+        for i in range(1, len(cards)):
+            current = cards[i]
+            left, right = 0, i
+            while left < right:
+                mid = (left + right) // 2
+                if current.numericValue < cards[mid].numericValue:
+                    right = mid
+                else:
+                    left = mid + 1
+            for j in range(i, left, -1):
+                cards[j] = cards[j - 1]
+            cards[left] = current
+        return cards
     def discard(self):
         self.cards = []
 
