@@ -331,18 +331,19 @@ while True:
             print('Please enter a number less or equal than 15.')
             continue
 
+        hand = Hand(card_number)
+
+        for card in hand.cards:
+                    print(card.value, card.suit)
         # Validate sorting_method
-        sorting_method_input = input('Select sorting method: (1- Heap Sort; 2- Binary Sort; 3- Merge Sort; 4- Insertion Sort; 5- Discard Hand): ')
+        sorting_method_input = input('Select sorting method: (1- Heap Sort; 2- Binary Sort; 3- Merge Sort; 4- Insertion Sort): ')
         sorting_method = int(sorting_method_input)
         if sorting_method not in [1, 2, 3, 4]:
             print('Invalid choice. Please select a number between 1 and 4.')
             continue
 
         # If both inputs are valid, proceed
-        hand = Hand(card_number)
-
-        for card in hand.cards:
-            print(card.value, card.suit)
+        
 
         if sorting_method == 1:
             hand.heapSort()
