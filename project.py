@@ -89,8 +89,11 @@ class Hand:
         mid = len(cards) // 2
         left = self.mergeSort(cards[:mid])
         right = self.mergeSort(cards[mid:])
-        return self.merge(left, right)
-
+        
+        merged = self.merge(left, right)
+        
+        self.cards = merged
+        return merged
     def merge(self, left, right):
         result = []
         i = j = 0
