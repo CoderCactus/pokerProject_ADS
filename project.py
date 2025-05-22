@@ -57,22 +57,19 @@ class Hand:
             self.cards[0], self.cards[i] = self.cards[i], self.cards[0]  
             heapify(self.cards, i, 0)
      
-    def binarySort(self, cards=None):
-        if cards is None:
-            cards = self.cards
-        for i in range(1, len(cards)):
-            current = cards[i]
+    def binarySort(self):
+        for i in range(1, len(self.cards)):
+            current = self.cards[i]
             left, right = 0, i
             while left < right:
                 mid = (left + right) // 2
-                if current.numericValue < cards[mid].numericValue:
+                if current.numericValue < self.cards[mid].numericValue:
                     right = mid
                 else:
                     left = mid + 1
             for j in range(i, left, -1):
-                cards[j] = cards[j - 1]
-            cards[left] = current
-        return cards
+                self.cards[j] = self.cards[j - 1]
+            self.cards[left] = current
     
     
     def discard(self):
@@ -94,6 +91,7 @@ class Hand:
         
         self.cards = merged
         return merged
+
     def merge(self, left, right):
         result = []
         i = j = 0
@@ -334,7 +332,7 @@ while True:
             continue
 
         # Validate sorting_method
-        sorting_method_input = input('Select sorting method: (1- Heap Sort; 2- Binary Sort; 3- Merge Sort; 4- Other): ')
+        sorting_method_input = input('Select sorting method: (1- Heap Sort; 2- Binary Sort; 3- Merge Sort; 4- Insertion Sort; 5- Discard Hand): ')
         sorting_method = int(sorting_method_input)
         if sorting_method not in [1, 2, 3, 4]:
             print('Invalid choice. Please select a number between 1 and 4.')
@@ -342,6 +340,9 @@ while True:
 
         # If both inputs are valid, proceed
         hand = Hand(card_number)
+
+        for card in hand.cards:
+            print(card.value, card.suit)
 
         if sorting_method == 1:
             hand.heapSort()
@@ -352,6 +353,7 @@ while True:
         elif sorting_method == 4:
             #hand.cards = sorted(hand.cards, key=lambda x: x.numericValue) #ONLY FOR TESTING
             hand.insertionSort()
+
         
         for card in hand.cards:
             print(card.value, card.suit)
