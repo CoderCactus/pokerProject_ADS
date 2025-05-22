@@ -326,11 +326,11 @@ while True:
         card_number_input = input('Insert the number of cards in the hand: ')
         
         card_number = int(card_number_input)
-        if card_number <= 0:
-            print('Please enter a positive number.')
+        if card_number <= 3:
+            print('Please enter a number bigger than 3.')
             continue
-        if card_number > 52:
-            print('Please enter a number less than or equal to 52.')
+        if card_number > 15:
+            print('Please enter a number less or equal than 15.')
             continue
 
         # Validate sorting_method
