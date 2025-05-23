@@ -1,6 +1,6 @@
 import streamlit as st
 import time
-from pker_project import Hand, hand_tally
+from project import Hand, hand_tally
 
 # --- Page Configuration ---
 st.set_page_config(page_title="🃏 Poker Hand Analyzer", layout="centered")
