@@ -1,5 +1,6 @@
 from random import randint
 
+
 class Card:
     def __init__(self, value, suit):
         """
@@ -23,24 +24,25 @@ class Card:
         else:
             self.numericValue = int(self.value)
 
+
 class Deck:
     def __init__(self):
         self.cards = []
-        for i in ['A','2','3','4','5','6','7','8','9','10','J','Q','K']:
-            #for j in ['clubs', 'hearts', 'diamonds', 'spades']:
+        for i in ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']:
+            # for j in ['clubs', 'hearts', 'diamonds', 'spades']:
             for j in ['♣', '♡', '♢', '♠']:
                 self.cards.append(Card(i, j))
 
     def shuffle(self):
         for i in range(len(self.cards)):
-            randSeed = randint(i, len(self.cards)-1)
+            randSeed = randint(i, len(self.cards) - 1)
             self.cards[i], self.cards[randSeed] = swap(self.cards[i], self.cards[randSeed])
-        
+
     def drawing(self, card_number):
         drawn = self.cards[:card_number]
         self.cards = self.cards[card_number:]
-        
-        return(drawn)
+
+        return (drawn)
 
 
 class Hand:
@@ -48,15 +50,15 @@ class Hand:
         deck = Deck()
         deck.shuffle()
         self.cards = deck.drawing(card_number)
-        
+
     def heapSort(self):
         n = len(self.cards)
-        for i in range(n//2 - 1, -1, -1):
+        for i in range(n // 2 - 1, -1, -1):
             heapify(self.cards, n, i)
-        for i in range(n-1, 0, -1):
-            self.cards[0], self.cards[i] = self.cards[i], self.cards[0]  
+        for i in range(n - 1, 0, -1):
+            self.cards[0], self.cards[i] = self.cards[i], self.cards[0]
             heapify(self.cards, i, 0)
-     
+
     def binarySort(self):
         for i in range(1, len(self.cards)):
             current = self.cards[i]
@@ -70,8 +72,8 @@ class Hand:
             for j in range(i, left, -1):
                 self.cards[j] = self.cards[j - 1]
             self.cards[left] = current
-    
-    
+
+
     def discard(self):
         self.cards = []
 
@@ -86,9 +88,10 @@ class Hand:
         mid = len(cards) // 2
         left = self.mergeSort(cards[:mid])
         right = self.mergeSort(cards[mid:])
-        
+
+
         merged = self.merge(left, right)
-        
+
         self.cards = merged
         return merged
 
@@ -105,23 +108,24 @@ class Hand:
         result.extend(left[i:])
         result.extend(right[j:])
         return result
-    
+
     def insertionSort(self):
         for i in range(1, len(self.cards)):
             current_card = self.cards[i]
             j = i - 1
-            
+
             # Shift larger cards to the right
             while j >= 0 and current_card.numericValue < self.cards[j].numericValue:
                 self.cards[j + 1] = self.cards[j]
                 j -= 1
-            
+
             # Insert the current card at the correct position
             self.cards[j + 1] = current_card
-        
+
         return self.cards
-    
+
     def pokerDetection(self):
+
         royalFlush = find_royalFlush(self.cards)
         straightFlush = find_straightFlush(self.cards)
         fourKind = find_fourKind(self.cards)
@@ -155,6 +159,7 @@ class Hand:
             for val in fullHouse:
                 print(f'Found a full house of {val[0]} and {val[1]}')
 
+
         if len(flush) != 0:
             hand_tally['flush'] += len(flush)
             
@@ -184,20 +189,22 @@ class Hand:
             for i in pair:
                 print(f'One Pair of {i}')
         
-
 def find_pair(lst):
     i = 0
     output = []
     while True:
         if i >= len(lst):
             break
+
         elif i+1 < len(lst) and lst[i].value ==  lst[i+1].value:
             #print(f'One Pair of {lst[i].value}')
             output.append(lst[i].value)
             i += 2
+
         else:
             i += 1
     return output
+
 
 def find_twoPairs(lst):
     output = []
@@ -208,21 +215,27 @@ def find_twoPairs(lst):
                 output.append([first_pair[i], first_pair[i+1]])
     return output
 
+
 def find_threeKind(lst):
     output = []
     i = 0
     while True:
         if i >= len(lst):
             break
+
         elif i+2 < len(lst) and lst[i].value ==  lst[i+1].value and  lst[i].value ==  lst[i+2].value:
             #print(f'Three of a Kind of {lst[i].value}')
             output.append(lst[i].value)
+
+
             i += 3
         else:
             i += 1
     return output
 
+
 def find_straight(lst):
+
     output = []
 
     # Create a list of tuples (numericValue, card), maintaining order and uniqueness
@@ -262,6 +275,7 @@ def find_straight(lst):
     return output
 
 
+
 def find_flush(lst):
     output = []
     for i in ['♣', '♡', '♢', '♠']:
@@ -270,6 +284,7 @@ def find_flush(lst):
             if j.suit == i:
                 count += 1
             if count == 5:
+
                 output.append(i)
     return output
         
@@ -290,14 +305,18 @@ def find_fourKind(lst):
     while True:
         if i >= len(lst):
             break
+
         elif i+3 < len(lst) and lst[i].value ==  lst[i+3].value:
             output.append(lst[i].value)
             i += 4
+            
         else:
             i += 1
     return output
 
+
 def find_straightFlush(lst):
+
     output = []
 
     # Assumes cards are sorted and Ace is high
@@ -311,7 +330,9 @@ def find_straightFlush(lst):
     return output
 
 
+
 def find_royalFlush(lst):
+
 
     output = []
     straightFlushes = find_straightFlush(lst)
@@ -324,14 +345,15 @@ def find_royalFlush(lst):
     return output
 
 
+
 def swap(n, m):
     return m, n
 
 
 def heapify(array, n, i):
     parent = i
-    left = 2*i+1
-    right = 2*i+2
+    left = 2 * i + 1
+    right = 2 * i + 2
 
     if left < n and array[left].numericValue > array[parent].numericValue:
         parent = left
@@ -344,17 +366,17 @@ def heapify(array, n, i):
         heapify(array, n, parent)
 
 
-hand_tally = {'pair': 0, 
-              'twoPairs': 0, 
-              'threeKind': 0, 
-              'straight': 0, 
-              'flush': 0, 
-              'fullHouse': 0, 
-              'fourKind': 0, 
-              'straightFlush': 0, 
+hand_tally = {'pair': 0,
+              'twoPairs': 0,
+              'threeKind': 0,
+              'straight': 0,
+              'flush': 0,
+              'fullHouse': 0,
+              'fourKind': 0,
+              'straightFlush': 0,
               'royalFlush': 0}
 
-#Only for testing Purposes
+# Only for testing Purposes
 
 '''
 card_number = 20 #int(input('Insert the number of cards in the hand: '))
@@ -369,59 +391,57 @@ for card in hand.cards:
 hand.pokerDetection()
 '''
 
+if __name__ == "__main__":
+    while True:
+        try:
+            card_number_input = input('Insert the number of cards in the hand: ')
 
-while True:
-    try:
-        # Validate card_number
-        card_number_input = input('Insert the number of cards in the hand: ')
-        
-        card_number = int(card_number_input)
-        if card_number <= 3:
-            print('Please enter a number bigger than 3.')
-            continue
-        if card_number > 15:
-            print('Please enter a number less or equal than 15.')
-            continue
+            card_number = int(card_number_input)
+            if card_number <= 3:
+                print('Please enter a number bigger than 3.')
+                continue
+            if card_number > 15:
+                print('Please enter a number less or equal than 15.')
+                continue
 
-        hand = Hand(card_number)
-        #hand.cards = [Card('K', '♠'), Card('A', '♠'), Card('Q', '♠'), Card('J', '♠'), Card('5', '♠'), Card('10', '♠')]
-        
-        for card in hand.cards:
-                    print(card.value, card.suit)
-        
-        # Validate sorting_method
-        sorting_method_input = input('Select sorting method: (1- Heap Sort; 2- Binary Sort; 3- Merge Sort; 4- Insertion Sort): ')
-        sorting_method = int(sorting_method_input)
-        if sorting_method not in [1, 2, 3, 4]:
-            print('Invalid choice. Please select a number between 1 and 4.')
-            continue
+            hand = Hand(card_number)
 
-        # If both inputs are valid, proceed
-        
+            for card in hand.cards:
+                print(card.value, card.suit)
+            # Validate sorting_method
+            sorting_method_input = input(
+                'Select sorting method: (1- Heap Sort; 2- Binary Sort; 3- Merge Sort; 4- Insertion Sort): ')
+            sorting_method = int(sorting_method_input)
+            if sorting_method not in [1, 2, 3, 4]:
+                print('Invalid choice. Please select a number between 1 and 4.')
+                continue
 
-        if sorting_method == 1:
-            hand.heapSort()
-        elif sorting_method == 2:
-            hand.binarySort()
-        elif sorting_method == 3:
-            hand.mergeSort()
-        elif sorting_method == 4:
-            #hand.cards = sorted(hand.cards, key=lambda x: x.numericValue) #ONLY FOR TESTING
-            hand.insertionSort()
+            # If both inputs are valid, proceed
 
-        
-        for card in hand.cards:
-            print(card.value, card.suit)
+            if sorting_method == 1:
+                hand.heapSort()
+            elif sorting_method == 2:
+                hand.binarySort()
+            elif sorting_method == 3:
+                hand.mergeSort()
+            elif sorting_method == 4:
+                # hand.cards = sorted(hand.cards, key=lambda x: x.numericValue) #ONLY FOR TESTING
+                hand.insertionSort()
 
-        hand.pokerDetection()
-        
-        print('Combination Tally: ')
-        for combination in hand_tally.keys():
-            print(f'{combination}: {hand_tally[combination]}') 
-        
-        if input('Do you want to continue? (yes/no): ').lower() != 'yes':
-            print('Exiting the program. Goodbye!')
-            break
+            for card in hand.cards:
+                print(card.value, card.suit)
+            # Reset the tally before each hand
 
-    except ValueError:
-        print('Invalid input. Please enter a valid number.')
+            hand.pokerDetection()
+
+            print('Combination Tally: ')
+            for combination in hand_tally.keys():
+                print(f'{combination}: {hand_tally[combination]}')
+
+            if input('Do you want to continue? (yes/no): ').lower() != 'yes':
+                print('Exiting the program. Goodbye!')
+                break
+
+        except ValueError:
+            print('Invalid input. Please enter a valid number.')
+
