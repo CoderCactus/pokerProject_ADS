@@ -73,8 +73,10 @@ class Hand:
                 self.cards[j] = self.cards[j - 1]
             self.cards[left] = current
 
+
     def discard(self):
         self.cards = []
+
 
     def mergeSort(self, cards=None):
         if cards is None:
@@ -86,6 +88,7 @@ class Hand:
         mid = len(cards) // 2
         left = self.mergeSort(cards[:mid])
         right = self.mergeSort(cards[mid:])
+
 
         merged = self.merge(left, right)
 
@@ -335,9 +338,6 @@ if __name__ == "__main__":
         try:
             card_number_input = input('Insert the number of cards in the hand: ')
 
-        # Validate card_number
-            card_number_input = input('Insert the number of cards in the hand: ')
-
             card_number = int(card_number_input)
             if card_number <= 3:
                 print('Please enter a number bigger than 3.')
@@ -386,3 +386,4 @@ if __name__ == "__main__":
 
         except ValueError:
             print('Invalid input. Please enter a valid number.')
+
