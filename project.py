@@ -436,7 +436,7 @@ if __name__ == "__main__":
     while True:
         try:
             card_number_input = input('Insert the number of cards in the hand: ') # User input for the number of cards in the hand
-             card_number = int(card_number_input)
+            card_number = int(card_number_input)
             # Validate input range
             if card_number <= 3:
                 print('Please enter a number bigger than 3.')
