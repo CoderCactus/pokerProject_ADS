@@ -287,10 +287,9 @@ def find_threeKind(lst):
 
 
 def find_straight(lst):
+    output = []  # To store found straight hands
 
-    output = [] # Creates an empty list to store the values of found straight hands
-
-    # Create a list of tuples (numericValue, card), maintaining order and uniqueness
+    # Remove duplicate numeric values, preserving order
     seen = set()
     ordered_unique = []
     for card in lst:
@@ -298,36 +297,38 @@ def find_straight(lst):
             ordered_unique.append((card.numericValue, card))
             seen.add(card.numericValue)
 
-    # If Ace is present, simulate Ace as 1 at the beginning
-    extended = list(ordered_unique) # Make a copy of the ordered_unique cards
+    # Handle Ace as low (1)
+    extended = list(ordered_unique)
     for value, card in ordered_unique:
-        if value == 14:  
-            # Create a duplicate Ace with numeric value 1 to handle low-Ace straights (A-2-3-4-5)
+        if value == 14:  # Ace
             low_ace = Card('A', card.suit)
             low_ace.numericValue = 1
-            extended.insert(0, (1, low_ace)) # Insert at the begining of the list
+            extended.insert(0, (1, low_ace))
             break
 
-    # Detect 5 consecutive values
-    for i in range(len(extended) - 4): # Guarantee there are at least 5 cards to form a straight
-        values = [extended[i + j][0] for j in range(5)] # Get the following 5 values from the extended list
-        # Check if the values are consecutive
+    i = 0
+    while i <= len(extended) - 5:
+        values = [extended[i + j][0] for j in range(5)]
         if values == list(range(values[0], values[0] + 5)):
-            needed = set(values) # Defines the set of values needed to complete the straight
-            straight = [] 
+            needed = set(values)
+            straight = []
+            used_cards = []
             for card in lst:
                 val = card.numericValue
                 if val == 14 and 1 in needed:
-                    val = 1 # Adjust Ace to 1 if needed
+                    val = 1
                 if val in needed:
-                    straight.append(card) # Add the card to the straight
+                    straight.append(card)
+                    used_cards.append(card)
                     needed.remove(val)
                 if not needed:
-                    break  # Found all needed cards for this straight
-            output.append(straight) # Add the found straight to output
+                    break
+            if len(straight) == 5:
+                output.append(straight)
+                lst = [c for c in lst if c not in used_cards]  # Remove used cards
+        i += 1
 
     return output
-
 
 
 def find_flush(lst):
@@ -350,7 +351,8 @@ def find_fullHouse(lst):
         remaining_cards = [i for i in lst if i.value != three]  # Remove all cards of the same value as the three of a kind from the list so that they are not repeated in the pair
         for pair in find_pair(remaining_cards):  # Look for pairs in the remaining cards
             output.append([pair, three]) # Append a full house combination
-    
+            break
+
     return output
 
 def find_fourKind(lst):
@@ -438,7 +440,7 @@ if __name__ == "__main__":
             card_number_input = input('Insert the number of cards in the hand: ') # User input for the number of cards in the hand
             card_number = int(card_number_input)
             # Validate input range
-            if card_number <= 3:
+            if card_number < 3:
                 print('Please enter a number bigger than 3.')
                 continue
             if card_number > 15:
@@ -447,12 +449,13 @@ if __name__ == "__main__":
 
             hand = Hand(card_number) # Create a hand with the given number of cards
 
+            hand.cards = [Card('2', '♣'), Card('2', '♣'), Card('4', '♣'), Card('5', '♣'), Card('2', '♣'), Card('3', '♣'), Card('4', '♣'), Card('5', '♣')]
+
             # Display the unsorted cards
             for card in hand.cards:
                 print(card.value, card.suit)
             # Ask user for sorting_method
-            sorting_method_input = input(
-                'Select sorting method: (1- Heap Sort; 2- Binary Sort; 3- Merge Sort; 4- Insertion Sort): ')
+            sorting_method_input = input('Select sorting method: (1- Heap Sort; 2- Binary Sort; 3- Merge Sort; 4- Insertion Sort): ')
             sorting_method = int(sorting_method_input)
             # Validate sorting method input
             if sorting_method not in [1, 2, 3, 4]:
@@ -484,7 +487,7 @@ if __name__ == "__main__":
             # Ask the user if they want to continue playing
             if input('Do you want to continue? (yes/no): ').lower() != 'yes':
                 print('Exiting the program. Goodbye!')
-                break
+                break 
         # Handle non-integer inputs 
         except ValueError:
             print('Invalid input. Please enter a valid number.')
