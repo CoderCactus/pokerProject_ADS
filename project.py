@@ -449,8 +449,6 @@ if __name__ == "__main__":
 
             hand = Hand(card_number) # Create a hand with the given number of cards
 
-            hand.cards = [Card('2', '♣'), Card('2', '♣'), Card('4', '♣'), Card('5', '♣'), Card('2', '♣'), Card('3', '♣'), Card('4', '♣'), Card('5', '♣')]
-
             # Display the unsorted cards
             for card in hand.cards:
                 print(card.value, card.suit)
