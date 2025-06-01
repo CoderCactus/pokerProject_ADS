@@ -4,11 +4,8 @@ from random import randint # Imports function to generate random integers
 class Card:
     def __init__(self, value, suit):
         """
-        Adds two numbers together .
-        Parameters :
-            Value (str): The value of the card ('A','2','3','4','5','6','7','8','9','10','J','Q','K').
-            Suit (str): The suit of the card ('♣', '♡', '♢' or '♠').
-
+        Creates a standard 52-card deck.
+        Iterates over values and suits to generate all possible combinations.
         """
         self.value = value # Original string value: '2','3','4','5','6','7','8','9','10','J','Q','K','A'
         self.suit = suit # Suit symbols: '♣', '♡', '♢' or '♠'
@@ -30,7 +27,7 @@ class Deck:
     def __init__(self):
         '''
         Create a standard 52 card deck.
-        Interates all values and suits to generate all possible combinations.
+        Iterates all values and suits to generate all possible combinations.
         '''
         self.cards = []
         for i in ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']:
@@ -65,14 +62,14 @@ class Hand:
         '''
         deck = Deck() # Create a new standard deck of 52 cards (13 values × 4 suits)
         deck.shuffle() # Randomly shuffle the deck to ensure the cards are random
-        self.cards = deck.drawing(card_number) # Draw n cards form the sfuffled deck into the hand
+        self.cards = deck.drawing(card_number) # Draw n cards form the shuffled deck into the hand
 
     def heapSort(self):
         '''
         Sorts cards in the hand using Heap Sort.
         Build heap and extract elements one by one.
         '''
-        n = len(self.cards) # Gtes the number of cards of the hand
+        n = len(self.cards) # Gets the number of cards of the hand
         for i in range(n // 2 - 1, -1, -1): 
             # Build max-heap starting from the last non-leaf node and heapify each node going upwards
             heapify(self.cards, n, i)
@@ -120,14 +117,14 @@ class Hand:
 
         if len(cards) <= 1:
             return cards
-        # Defines a hand with 0 or 1 cards as already softed
+        # Defines a hand with 0 or 1 cards as already sorted
 
         mid = len(cards) // 2 # Finds the middle of the hand and divide it into two lists
         left = self.mergeSort(cards[:mid]) # Sorts the left half recursively
         right = self.mergeSort(cards[mid:]) # Sorts the left half recursively
 
 
-        merged = self.merge(left, right) # Merge the tow halves creating one sorted list
+        merged = self.merge(left, right) # Merge the two halves creating one sorted list
 
         self.cards = merged # Update the hand's cards
         return merged
@@ -203,7 +200,7 @@ class Hand:
             for val in fourKind:
                 print(f'Four of a Kind of {val}')
 
-        # Check if any Full Houses were found (3 cards of sama rank and 2 of other).
+        # Check if any Full Houses were found (3 cards of same rank and 2 of other).
         if len(fullHouse) != 0:
             hand_tally['fullHouse'] += len(fullHouse)
             
@@ -217,7 +214,7 @@ class Hand:
             for suit in flush:
                 print(f'Flush of {suit}')
 
-        # Check if any Straights were found (5 consecutive of different suit).
+        # Check if any Straights were found (5 consecutive cards of different or same suit).
         if len(straight) != 0:
             hand_tally['straight'] += len(straight)
 
@@ -245,6 +242,9 @@ class Hand:
                 print(f'One Pair of {i}')
         
 def find_pair(lst):
+    '''
+    Finds all single pairs (two cards of the same value) in a list of cards.
+    '''
     i = 0 #Creates a counter for the number of pairs
     output = []  # Creates an empty list to store the values of found pairs
     while True:
@@ -261,6 +261,9 @@ def find_pair(lst):
 
 
 def find_twoPairs(lst):
+    '''
+    Finds all occurrences of two different pairs in a list of cards.
+    '''
     output = [] # Creates an empty list to store the values of found two pairs
     first_pair = find_pair(lst) # Call find_pair function getting all the single pairs
     if len(first_pair) >= 2: # Check if there are two pairs of the same rank
@@ -271,6 +274,9 @@ def find_twoPairs(lst):
 
 
 def find_threeKind(lst):
+    '''
+    Finds all occurrences of three of a kind (three cards of the same value).
+    '''
     output = [] # Creates an empty list to store the values of found three of a kind hands
     i = 0 #Creates a counter for the index
     while True:
@@ -287,6 +293,9 @@ def find_threeKind(lst):
 
 
 def find_straight(lst):
+    '''
+    Finds all sequences of five cards in a row (a straight).
+    '''
     output = []  # To store found straight hands
 
     # Remove duplicate numeric values, preserving order
@@ -332,6 +341,9 @@ def find_straight(lst):
 
 
 def find_flush(lst):
+    '''
+    Finds flushes (five cards of the same suit).
+    '''
     output = [] # Creates an empty list to store the values of found flushes
     for i in ['♣', '♡', '♢', '♠']:
         count = 0 # Reset counter for each suit
@@ -345,6 +357,9 @@ def find_flush(lst):
     return output
         
 def find_fullHouse(lst):
+    '''
+    Finds full house hands (a three of a kind plus a pair).
+    '''
     output = [] # Creates an empty list to store the values of found full houses
     # Loop through each "three of a kind" found in the list
     for three in find_threeKind(lst):
@@ -356,6 +371,9 @@ def find_fullHouse(lst):
     return output
 
 def find_fourKind(lst):
+    '''
+    Finds four of a kind hands (four cards of the same value).
+    '''
     output = [] # Creates an empty list to store the values of found four of a kind hands
     i = 0 #Creates a counter for the index
     while True:
@@ -372,6 +390,9 @@ def find_fourKind(lst):
 
 
 def find_straightFlush(lst):
+    '''
+    Finds straight flush hands (five consecutive cards of the same suit).
+    '''
     output = [] # Creates an empty list to store the values of found straight flushes
     # Assumes cards are sorted and Ace is high (14)
     straights = find_straight(lst)
@@ -384,6 +405,9 @@ def find_straightFlush(lst):
 
 
 def find_royalFlush(lst):
+    '''
+    Finds royal flush hands (10, J, Q, K, A of the same suit).
+    '''
     output = [] # Creates an empty list to store the values of found royal flushes
     straightFlushes = find_straightFlush(lst)  # Get all straight flushes from the given list of cards
 
