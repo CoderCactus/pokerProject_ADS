@@ -31,11 +31,11 @@ def render_cards(cards):
 
 # Sidebar Controls 
 st.sidebar.header("Settings") # Adds user input controls in the sidebar
-card_number = st.sidebar.slider("Number of cards in hand", min_value=4, max_value=15, value=7)
+card_number = st.sidebar.slider("Number of cards in hand", min_value=3, max_value=15, value=7)
 
 sort_method = st.sidebar.selectbox(
     "Choose Sorting Method",
-    options=["Heap Sort", "Binary Sort", "Merge Sort", "Insertion Sort"]
+    options=["Heap Sort", "Binary Sort", "Merge Sort", "Quick Sort"]
 )
 
 # Button to trigger dealing cards
@@ -67,8 +67,8 @@ if st.sidebar.button("🃠 Deal Cards"):
         hand.binarySort()
     elif sort_method == "Merge Sort":
         hand.mergeSort()
-    elif sort_method == "Insertion Sort":
-        hand.insertionSort()
+    elif sort_method == "Quick Sort":
+        hand.quickSort(0, len(hand.cards)-1)
 
     # Display sorted cards
     st.subheader("🔢 Sorted Cards")
