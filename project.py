@@ -131,7 +131,7 @@ class Hand:
 
     def merge(self, left, right):
         '''
-        Allows for Merge Sort to merge two lists
+        Allows for Merge Sort to merge two lists.
         '''
         result = [] # Creates an empty list to hold the merged result
         i = j = 0 # Initializes counters for left and right lists, respectively
@@ -148,10 +148,15 @@ class Hand:
         return result
 
     def quickSort(self, first, last):
-      if first < last:
-        pivot = random_partition(self, first, last)
-        self.quickSort(first, pivot-1)
-        self.quickSort(pivot+1, last)
+        '''
+        Sorts the cards in the hand using Quick Sort.
+        Recursively selects a pivot and partitions the list into sublists of lower and higher values.
+        '''  
+        # Only proceed if there are at least two elements to sort
+        if first < last: 
+            pivot = random_partition(self, first, last) # Randomly partition the list and get the final position of the pivot
+            self.quickSort(first, pivot-1) # Recursively sort the sublist to the left of the pivot
+            self.quickSort(pivot+1, last) # Recursively sort the sublist to the right of the pivot
 
         return self.cards
 
@@ -438,20 +443,32 @@ def heapify(array, n, i):
         heapify(array, n, parent) # Recursively heapify the affected subtree
 
 def random_partition(self, first, last):
-    random_pivot = random.randrange(first, last)
-    self.cards[first], self.cards[random_pivot] = self.cards[random_pivot], self.cards[first]
+    '''
+    Selects a random pivot, swaps it with the first element,
+    and then calls partition to arrange elements around the pivot.
+    '''
+    random_pivot = random.randrange(first, last) # Choose a random index between first and last
+    self.cards[first], self.cards[random_pivot] = self.cards[random_pivot], self.cards[first] # Swap the random pivot with the first element
 
     return partition(self, first, last)
 
 def partition(self, first, last):
-    pivot = first
-    i = first+1
-    for j in range(first+1, last+1):
-        if self.cards[j].numericValue <= self.cards[pivot].numericValue:
-            self.cards[i], self.cards[j] = self.cards[j], self.cards[i]
-            i = i+1
-    self.cards[pivot], self.cards[i-1] = self.cards[i-1], self.cards[pivot]
-    pivot = i-1
+    '''
+    Partitions the list so that all elements less than or equal to the pivot
+    are on the left, and all elements greater are on the right.
+
+    Returns the final index of the pivot.
+    '''
+    pivot = first # Choose the pivot as the first element
+    i = first+1 # i tracks the boundary between elements less than the pivot and those not yet checked
+    # Iterate through the rest of the list
+    for j in range(first+1, last+1): 
+        # If current element is less than or equal to the pivot
+        if self.cards[j].numericValue <= self.cards[pivot].numericValue: 
+            self.cards[i], self.cards[j] = self.cards[j], self.cards[i] # Swap it into the section with smaller elements
+            i = i+1 # Move the boundary
+    self.cards[pivot], self.cards[i-1] = self.cards[i-1], self.cards[pivot] # Place the pivot in its correct sorted position
+    pivot = i-1 # Return the new index of the pivot
     return (pivot)
 
 hand_tally = {'pair': 0,
