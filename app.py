@@ -1,6 +1,6 @@
 import streamlit as st
 import time
-from project import Hand, hand_tally
+from project import Hand, hand_tally, Deck
 
 # Page Configuration - Sets up the title and layout of the Streamlit app
 st.set_page_config(page_title="🃏 Poker Hand Analyzer", layout="centered")
@@ -52,8 +52,9 @@ if st.sidebar.button("🃠 Deal Cards"):
     for key in hand_tally:
         hand_tally[key] = 0
 
+    deck = Deck()
     # Generate new hand
-    hand = Hand(card_number)
+    hand = Hand(card_number, deck)
 
     # Display drawn cards
     st.subheader("🗂️ Cards Drawn")
