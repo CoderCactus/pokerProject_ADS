@@ -56,11 +56,10 @@ class Deck:
 
 class Hand:
     
-    def __init__(self, card_number):
+    def __init__(self, card_number, deck):
         '''
         Creates a hand by shuffling a new deck and drawing cards from it.
         '''
-        deck = Deck() # Create a new standard deck of 52 cards (13 values × 4 suits)
         deck.shuffle() # Randomly shuffle the deck to ensure the cards are random
         self.cards = deck.drawing(card_number) # Draw n cards form the shuffled deck into the hand
 
@@ -235,7 +234,8 @@ class Hand:
             hand_tally['pair'] += len(pair)
             for i in pair:
                 print(f'One Pair of {i}')
-        
+
+
 def find_pair(lst):
     '''
     Finds all single pairs (two cards of the same value) in a list of cards.
@@ -482,28 +482,36 @@ hand_tally = {'pair': 0,
               'royalFlush': 0}
 
 if __name__ == "__main__":
+    
+    deck = Deck() # Create a new standard deck of 52 cards (13 values × 4 suits)
+    
     while True:
         try:
             card_number_input = input('Insert the number of cards in the hand: ') # User input for the number of cards in the hand
             card_number = int(card_number_input)
             # Validate input range
-            if card_number < 3:
+            if card_number > len(deck.cards):
+                print('The deck does not have sufficient cards left')
+                print('....')
+                print('Opening a new deck of cards')
+                deck = Deck()
+            elif card_number < 3:
                 print('Please enter a number bigger than 3.')
                 continue
-            if card_number > 15:
+            elif card_number > 15:
                 print('Please enter a number less or equal than 15.')
                 continue
 
-            hand = Hand(card_number) # Create a hand with the given number of cards
+            hand = Hand(card_number, deck) # Create a hand with the given number of cards
 
             # Display the unsorted cards
             for card in hand.cards:
                 print(card.value, card.suit)
             # Ask user for sorting_method
-            sorting_method_input = input('Select sorting method: (1- Heap Sort; 2- Binary Sort; 3- Merge Sort; 4- Quick Sort): ')
+            sorting_method_input = input('Select sorting method: (1- Heap Sort; 2- Binary Sort; 3- Merge Sort; 4- Quick Sort; 5- Discard Hand): ')
             sorting_method = int(sorting_method_input)
             # Validate sorting method input
-            if sorting_method not in [1, 2, 3, 4]:
+            if sorting_method not in [1, 2, 3, 4, 5]:
                 print('Invalid choice. Please select a number between 1 and 4.')
                 continue
 
@@ -516,6 +524,9 @@ if __name__ == "__main__":
                 hand.mergeSort()
             elif sorting_method == 4:
                 hand.quickSort(0, len(hand.cards)-1)
+            elif sorting_method == 5:
+                hand.discard()
+                continue
 
             # Display the sorted cards
             for card in hand.cards:
