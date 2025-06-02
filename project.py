@@ -1,4 +1,4 @@
-from random import randint # Imports function to generate random integers
+import random  # Imports the random library
 
 
 class Card:
@@ -41,7 +41,7 @@ class Deck:
         Randomly swaps cards from the deck between themselves.
         '''
         for i in range(len(self.cards)):
-            randSeed = randint(i, len(self.cards) - 1) # Pick a random card index
+            randSeed = random.randint(i, len(self.cards) - 1) # Pick a random card index
             self.cards[i], self.cards[randSeed] = swap(self.cards[i], self.cards[randSeed]) # Swap the current card with the randomly chosen index card
 
     def drawing(self, card_number):
@@ -147,21 +147,11 @@ class Hand:
         result.extend(right[j:]) # Add remaining elements from the right list to the merged result list
         return result
 
-    def insertionSort(self):
-        '''
-        Sorts cards in the hand using the InsertionSort algorithm.
-        '''
-        for i in range(1, len(self.cards)): 
-            current_card = self.cards[i] # Defines which card is to be placed in the correct position
-            j = i - 1 # Defines j for comparison with the previous card purposes
-
-            # Shift cards to the right if they are larger than the current one
-            while j >= 0 and current_card.numericValue < self.cards[j].numericValue:
-                self.cards[j + 1] = self.cards[j] # Shift card one position to the right
-                j -= 1 # Move left in the list 
-
-            # Insert the current card at the correctly sorted position
-            self.cards[j + 1] = current_card
+    def quickSort(self, first, last):
+      if first < last:
+        pivot = random_partition(self, first, last)
+        self.quickSort(first, pivot-1)
+        self.quickSort(pivot+1, last)
 
         return self.cards
 
@@ -447,6 +437,22 @@ def heapify(array, n, i):
         array[i], array[parent] = array[parent], array[i] # Swap parent and current node
         heapify(array, n, parent) # Recursively heapify the affected subtree
 
+def random_partition(self, first, last):
+    random_pivot = random.randrange(first, last)
+    self.cards[first], self.cards[random_pivot] = self.cards[random_pivot], self.cards[first]
+
+    return partition(self, first, last)
+
+def partition(self, first, last):
+    pivot = first
+    i = first+1
+    for j in range(first+1, last+1):
+        if self.cards[j].numericValue <= self.cards[pivot].numericValue:
+            self.cards[i], self.cards[j] = self.cards[j], self.cards[i]
+            i = i+1
+    self.cards[pivot], self.cards[i-1] = self.cards[i-1], self.cards[pivot]
+    pivot = i-1
+    return (pivot)
 
 hand_tally = {'pair': 0,
               'twoPairs': 0,
@@ -477,7 +483,7 @@ if __name__ == "__main__":
             for card in hand.cards:
                 print(card.value, card.suit)
             # Ask user for sorting_method
-            sorting_method_input = input('Select sorting method: (1- Heap Sort; 2- Binary Sort; 3- Merge Sort; 4- Insertion Sort): ')
+            sorting_method_input = input('Select sorting method: (1- Heap Sort; 2- Binary Sort; 3- Merge Sort; 4- Quick Sort): ')
             sorting_method = int(sorting_method_input)
             # Validate sorting method input
             if sorting_method not in [1, 2, 3, 4]:
@@ -492,7 +498,7 @@ if __name__ == "__main__":
             elif sorting_method == 3:
                 hand.mergeSort()
             elif sorting_method == 4:
-                hand.insertionSort()
+                hand.quickSort(0, len(hand.cards)-1)
 
             # Display the sorted cards
             for card in hand.cards:
