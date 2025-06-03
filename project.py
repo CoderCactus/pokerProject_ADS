@@ -124,56 +124,71 @@ class Hand:
 
         return self.cards
 
-    def pokerDetection(self):
-        # TODO
+        def pokerDetection(self):
+        """
+        Detects poker hands and returns a list of readable messages describing each detected combination.
+        """
+        messages = []
+
         royalFlush = find_royalFlush(self.cards)
+        if len(royalFlush)!=0:
+            hand_tally['royalFlush'] += len(royalFlush)
+            for suit in royalFlush:
+                messages.append(f"Royal Flush of {suit[1]}")
+
         straightFlush = find_straightFlush(self.cards)
+        if len(straightFlush) != 0:
+            hand_tally['straightFlush'] += len(straightFlush)
+            for val in straightFlush:
+                messages.append(f"Straight Flush from {val[0][0].value} to {val[0][-1].value} of {val[1]}")
+
         fourKind = find_fourKind(self.cards)
+        if len(fourKind) != 0:
+            hand_tally['fourKind'] += len(fourKind)
+            for val in fourKind:
+                messages.append(f"Four of a Kind of {val}")
+
         fullHouse = find_fullHouse(self.cards)
+        if len(fullHouse) != 0:
+            hand_tally['fullHouse'] += len(fullHouse)
+            for val in fullHouse:
+                messages.append(f"Full House: Three {val[1]}s and a pair of {val[0]}s")
+
         flush = find_flush(self.cards)
+        if len(flush) != 0:
+            hand_tally['flush'] += len(flush)
+            for suit in flush:
+                messages.append(f"Flush of {suit}")
+
         straight = find_straight(self.cards)
+        if len(straight) != 0:
+            hand_tally['straight'] += len(straight)
+            for val in straight:
+                messages.append(f"Straight from {val[0].value} to {val[-1].value}")
+
         threeKind = find_threeKind(self.cards)
+        if len(threeKind) != 0:
+            hand_tally['threeKind'] += len(threeKind)
+            for val in threeKind:
+                messages.append(f"Three of a Kind of {val}")
+
         twoPairs = find_twoPairs(self.cards)
+        if len(twoPairs) != 0:
+            hand_tally['twoPairs'] += len(twoPairs)
+            for val in twoPairs:
+                messages.append(f"Two Pairs: {val[0]} and {val[1]}")
+
         pair = find_pair(self.cards)
+        if len(pair) != 0:
+            hand_tally['pair'] += len(pair)
+            for val in pair:
+                messages.append(f"One Pair of {val}")
 
+        if not messages:
+            messages.append("No combinations detected.")
 
-
-        if royalFlush != False:
-            hand_tally['royalFlush'] += 1
-            print(f'Royal Straight of {royalFlush}')
-
-        if straightFlush != False:
-            hand_tally['straightFlush'] += 1
-            print(
-                f'Straight Flush of {straightFlush[0][0].value} to {straightFlush[0][-1].value} and suit {straightFlush[1]}')
-
-        if fourKind != False:
-            hand_tally['fourKind'] += 1
-            print(f'Four of a Kind of {fourKind}')
-
-        if fullHouse != False:
-            hand_tally['fullHouse'] += 1
-            print(f'Found a full house of {fullHouse[0]} and {fullHouse[1]}')
-
-        if flush != False:
-            hand_tally['flush'] += 1
-            print(f'Flush of {flush}')
-
-        if straight != False:
-            hand_tally['straight'] += 1
-            print(f'Straight between {straight[0].value} and {straight[-1].value}')
-
-        if threeKind != False:
-            hand_tally['threeKind'] += 1
-            print(f'Three of a Kind of {threeKind}')
-
-        if twoPairs != False:
-            hand_tally['twoPairs'] += 1
-            print(f'Two pairs of {twoPairs[0]} and {twoPairs[1]}')
-
-        if pair != False:
-            hand_tally['pair'] += 1
-            print(f'One Pair of {pair}')
+        print(messages)
+        return messages
 
 
 def find_pair(lst):
