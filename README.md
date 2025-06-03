@@ -1,10 +1,10 @@
-# 🃏 Poker Hand Analyzer App
+# Poker Hand Analyzer App
 
 A Streamlit web app to draw poker hands, sort them using different algorithms, and detect classic poker combinations with stylish card rendering.
 
 ---
 
-## ✅ Requirements
+## Requirements
 
 - Python 3.8 or higher
 
@@ -14,7 +14,7 @@ Install the required Python package:
 pip install streamlit
 ````
 ---
-# 🚀 How to Run the App
+# How to Run the App
 Clone or download the project files to your local machine.
 
 Ensure app.py and project.py are in the same folder.
@@ -30,7 +30,7 @@ Your default browser will automatically open with the interface.
 If it doesn’t, copy and paste the URL from the terminal (usually http://localhost:8501).
 
 ----
-# 🎮 Features
+# Features
 ## Adjust Hand Size
    
 Use the sidebar slider to select how many cards to draw (between 3 and 15).
@@ -45,12 +45,10 @@ Pick one of the following algorithms from the dropdown:
   
  - Merge Sort
   
- - Insertion Sort
-  
  - Quick Sort
 
 ## Deal Cards
-Click the "🃠 Deal Cards" button to:
+Click the "Deal Cards" button to:
 
 - Shuffle the deck with animation
 
