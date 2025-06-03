@@ -157,9 +157,10 @@ if st.sidebar.button("Deal Cards"):
             st.success(f"**{key}**: {value}")
             detected = True
 
-     # If no combinations were detected
+    # If no combinations were detected
     if not detected:
         st.info("No poker combinations detected in this hand.")
 
+    # Discards the current hand and resets the GUI
     if st.button("Discard"):
         hand.discard()

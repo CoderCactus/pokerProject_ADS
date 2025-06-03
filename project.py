@@ -507,7 +507,7 @@ if __name__ == "__main__":
             # Display the unsorted cards
             for card in hand.cards:
                 print(card.value, card.suit)
-            # Ask user for sorting_method
+            # Ask user for sorting_method or discard hand
             sorting_method_input = input('Select sorting method: (1- Heap Sort; 2- Binary Sort; 3- Merge Sort; 4- Quick Sort; 5- Discard Hand): ')
             sorting_method = int(sorting_method_input)
             # Validate sorting method input
@@ -515,7 +515,7 @@ if __name__ == "__main__":
                 print('Invalid choice. Please select a number between 1 and 4.')
                 continue
 
-            # Sort the hand using the selected sorting algorithm
+            # Sort the hand using the selected sorting algorithm or discard hand
             if sorting_method == 1:
                 hand.heapSort()
             elif sorting_method == 2:
