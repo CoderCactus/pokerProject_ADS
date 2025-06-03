@@ -38,7 +38,7 @@ sort_method = st.sidebar.selectbox(
 )
 
 # Button to trigger dealing cards
-if st.sidebar.button("🃠 Deal Cards"):
+if st.sidebar.button("Deal Cards"):
     # Animated Shuffle Effect 
     with st.spinner("Shuffling deck..."):
         progress = st.progress(0)
