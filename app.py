@@ -34,7 +34,7 @@ card_number = st.sidebar.slider("Number of cards in hand", min_value=3, max_valu
 
 sort_method = st.sidebar.selectbox(
     "Choose Sorting Method",
-    options=["Heap Sort", "Binary Sort", "Merge Sort", "Quick Sort"]
+    options=["Heap Sort", "Binary Sort", "Merge Sort", "Quick Sort", "Discard Hand"]
 )
 
 # Button to trigger dealing cards
@@ -69,7 +69,7 @@ if st.sidebar.button("Deal Cards"):
         hand.mergeSort()
     elif sort_method == "Quick Sort":
         hand.quickSort(0, len(hand.cards)-1)
-
+    
     # Display sorted cards
     st.subheader("Sorted Cards")
     render_cards(hand.cards)
@@ -160,3 +160,8 @@ if st.sidebar.button("Deal Cards"):
      # If no combinations were detected
     if not detected:
         st.info("No poker combinations detected in this hand.")
+        
+    if st.button("Discard"):
+        hand.discard()
+        st.subheader("New Hand")
+        render_cards(hand.cards)
