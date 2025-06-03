@@ -3,11 +3,10 @@ import time
 import project
 
 # Page Configuration - Sets up the title and layout of the Streamlit app
-st.set_page_config(page_title="🃏 Poker Hand Analyzer", layout="centered")
+st.set_page_config(page_title="Poker Hand Analyzer", layout="centered")
 
 # Defines app title and subtitle
-st.title("🃏 Poker Hand Analyzer")
-st.caption("Analyze poker hands using different sorting algorithms with stylish rendering.")
+st.title("Poker Hand Analyser")
 
 # Helper: Render Cards Nicely 
 def render_cards(cards):
@@ -57,7 +56,7 @@ if st.sidebar.button("🃠 Deal Cards"):
     hand = project.Hand(card_number, deck)
 
     # Display drawn cards
-    st.subheader("🗂️ Cards Drawn")
+    st.subheader("Cards Drawn")
     render_cards(hand.cards)
 
     # Sorting 
@@ -72,12 +71,12 @@ if st.sidebar.button("🃠 Deal Cards"):
         hand.quickSort(0, len(hand.cards)-1)
 
     # Display sorted cards
-    st.subheader("🔢 Sorted Cards")
+    st.subheader("Sorted Cards")
     render_cards(hand.cards)
 
     # Poker Detection 
     # Analyze the hand for poker combinations
-    st.subheader("♠️ Poker Hand Detection")
+    st.subheader("Poker Hand Detection")
 
     # Detects all possible poker hands
     royalFlush = project.find_royalFlush(hand.cards)
@@ -94,64 +93,64 @@ if st.sidebar.button("🃠 Deal Cards"):
     if len(royalFlush) != 0:
         project.hand_tally['royalFlush'] += len(royalFlush)
         for suit in royalFlush:
-            st.text(f'Royal Straight of {suit[1]}')
+            st.success(f'Royal Straight of {suit[1]}')
 
     # Check if any Straight Flushes were found (5 consecutive cards of same suit).       
     if len(straightFlush) != 0:
         project.hand_tally['straightFlush'] += len(straightFlush)
             
         for val in straightFlush:
-            st.text(f'Straight Flush of {val[0][0].value} to {val[0][-1].value} and suit {val[1][0]}')
+            st.success(f'Straight Flush of {val[0][0].value} to {val[0][-1].value} and suit {val[1][0]}')
 
     # Check if any Four of a Kind were found (4 cards of same rank).
     if len(fourKind) != 0:
         project.hand_tally['fourKind'] += len(fourKind)
         for val in fourKind:
-            st.text(f'Four of a Kind of {val}')
+            st.success(f'Four of a Kind of {val}')
 
     # Check if any Full Houses were found (3 cards of same rank and 2 of other).
     if len(fullHouse) != 0:
         project.hand_tally['fullHouse'] += len(fullHouse)
             
         for val in fullHouse:
-            st.text(f'Found a full house of {val[0]} and {val[1]}')
+            st.success(f'Found a full house of {val[0]} and {val[1]}')
 
     # Check if any Flushes were found (5 cards of same suit).
     if len(flush) != 0:
         project.hand_tally['flush'] += len(flush)
                     
         for suit in flush:
-            st.text(f'Flush of {suit}')
+            st.success(f'Flush of {suit}')
 
     # Check if any Straights were found (5 consecutive cards of different or same suit).
     if len(straight) != 0:
         project.hand_tally['straight'] += len(straight)
 
         for val in straight:
-            st.text(f'Straight between {val[0].value} and {val[-1].value}')
+            st.success(f'Straight between {val[0].value} and {val[-1].value}')
 
     # Check if any Three of a Kind were found (3 of same rank).
     if len(threeKind) != 0:
         project.hand_tally['threeKind'] += len(threeKind)
 
         for val in threeKind:
-            st.text(f'Three of a Kind of {val}')
+            st.success(f'Three of a Kind of {val}')
 
     # Check if any Two Pairs were found (2 cards of a rank and 2 of another).
     if len(twoPairs) != 0:
         project.hand_tally['twoPairs'] += len(twoPairs)
             
         for val in twoPairs:
-            st.text(f'Two pairs of {val[0]} and {val[1]}')
+            st.success(f'Two pairs of {val[0]} and {val[1]}')
 
     # Check if any Pairs were found (2 cards of the same rank).
     if len(pair) != 0:
         project.hand_tally['pair'] += len(pair)
         for i in pair:
-            st.text(f'One Pair of {i}')
+            st.success(f'One Pair of {i}')
 
     # Display combination results
-    st.subheader("📊 Combination Tally")
+    st.subheader("Combination Tally")
     detected = False
     for key, value in project.hand_tally.items():
         if value > 0:
