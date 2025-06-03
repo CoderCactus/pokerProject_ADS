@@ -1,3 +1,36 @@
+# Poker Hand Evaluator and Card Sorter
+
+This Python project simulates a deck of cards and allows creation of hands, sorting them using multiple algorithms, and evaluating for various poker combinations.
+
+## Features
+
+- Standard 52-card deck with suits: Clubs, Hearts, Diamonds, Spades and values: A, 2–10, J, Q, K  
+- Shuffle using Fisher-Yates algorithm  
+- Draw cards into a hand  
+- Sorting Algorithms:
+  - Heap Sort
+  - Binary Insertion Sort
+  - Merge Sort
+  - Quick Sort  
+- Poker Hand Detection:
+  - Royal Flush
+  - Straight Flush
+  - Four of a Kind
+  - Full House
+  - Flush
+  - Straight
+  - Three of a Kind
+  - Two Pairs
+  - Pair
+
+## Project Structure
+
+- `Card`: Represents an individual playing card  
+- `Deck`: Creates and manages the 52-card deck  
+- `Hand`: Draws, sorts, and evaluates a hand  
+- Poker detection functions (e.g., `find_pair`, `find_flush`) identify various hand combinations
+
+
 # Poker Hand Analyzer App
 
 A Streamlit web app to draw poker hands, sort them using different algorithms, and detect classic poker combinations with stylish card rendering.
