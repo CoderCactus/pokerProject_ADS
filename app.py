@@ -147,7 +147,7 @@ if st.sidebar.button("Deal Cards"):
     if len(pair) != 0:
         project.hand_tally['pair'] += len(pair)
         for i in pair:
-            st.success(f'One Pair of {i}')
+            st.info(f'One Pair of {i}')
 
     # Display combination results
     st.subheader("Combination Tally")
