@@ -337,19 +337,19 @@ def find_straight(lst):
 
 def find_flush(lst):
     '''
-    Finds flushes (five cards of the same suit).
+    Finds flushes (every group of 5 cards of the same suit).
+    Returns a list with one entry per flush found (e.g., two '♠' if there are 10 spades).
     '''
-    output = [] # Creates an empty list to store the values of found flushes
-    for i in ['♣', '♡', '♢', '♠']:
-        count = 0 # Reset counter for each suit
-        # Count how many cards in the list have the current suit
-        for j in lst:
-            if j.suit == i:
-                count += 1
-            # 5 cards of the same suit correspond to a flush
-            if count == 5:
-                output.append(i) # Add the suit to output list
+    output = []
+    suits = ['♣', '♡', '♢', '♠']
+
+    for suit in suits:
+        count = sum(1 for card in lst if card.suit == suit)
+        flush_count = count // 5  # Number of full 5-card flushes
+        output.extend([suit] * flush_count)  # Add suit once per flush
+
     return output
+
         
 def find_fullHouse(lst):
     '''
