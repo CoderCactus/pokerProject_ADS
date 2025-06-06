@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#FFFFFF"         # Button and highlights
+backgroundColor =  "#86878d"     # Main background
+secondaryBackgroundColor = "#385671"  # Sidebar and card backgrounds
+textColor = "#FFFFFF"            # General text color
+font = "sans serif"              # Options: "sans serif", "serif", "monospace"
