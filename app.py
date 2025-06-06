@@ -24,7 +24,7 @@ def render_cards(cards):
         styled.append(
             f"<div style='display:inline-block; border:1px solid #ccc; padding:10px; margin:6px; "
             f"border-radius:12px; background:white; color:{color}; font-size:22px; text-align:center; "
-            f"width:50px; height:70px; box-shadow:2px 2px 4px #aaa;'>{card.value}<br>{suit}</div>"
+            f"width:60px; height:90px; box-shadow:2px 2px 4px #aaa;'>{card.value}<br>{suit}</div>"
         )
     st.markdown("".join(styled), unsafe_allow_html=True)
 
@@ -162,5 +162,5 @@ if st.sidebar.button("Deal Cards"):
         st.info("No poker combinations detected in this hand.")
 
     # Discards the current hand and resets the GUI
-    if st.button("Discard"):
+    if st.sidebar.button("Discard"):
         hand.discard()
