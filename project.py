@@ -471,7 +471,13 @@ def partition(self, first, last):
     pivot = i-1 # Return the new index of the pivot
     return (pivot)
 
-hand_tally = {'pair': 0,
+if __name__ == "__main__":
+    
+    deck = Deck() # Create a new standard deck of 52 cards (13 values × 4 suits)
+    
+    while True:
+        try:
+            hand_tally = {'pair': 0,
               'twoPairs': 0,
               'threeKind': 0,
               'straight': 0,
@@ -480,13 +486,7 @@ hand_tally = {'pair': 0,
               'fourKind': 0,
               'straightFlush': 0,
               'royalFlush': 0}
-
-if __name__ == "__main__":
-    
-    deck = Deck() # Create a new standard deck of 52 cards (13 values × 4 suits)
-    
-    while True:
-        try:
+            
             card_number_input = input('Insert the number of cards in the hand: ') # User input for the number of cards in the hand
             card_number = int(card_number_input)
             # Validate input range
