@@ -356,12 +356,16 @@ def find_fullHouse(lst):
     Finds full house hands (a three of a kind plus a pair).
     '''
     output = [] # Creates an empty list to store the values of found full houses
+    pairs_used = []
+    threes = find_threeKind(lst)
     # Loop through each "three of a kind" found in the list
-    for three in find_threeKind(lst):
+    for three in threes:
         remaining_cards = [i for i in lst if i.value != three]  # Remove all cards of the same value as the three of a kind from the list so that they are not repeated in the pair
         for pair in find_pair(remaining_cards):  # Look for pairs in the remaining cards
-            output.append([pair, three]) # Append a full house combination
-            break
+            if pair not in pairs_used and pair not in threes:
+                output.append([pair, three]) # Append a full house combination
+                pairs_used.append(pair)
+                break
 
     return output
 
@@ -495,6 +499,8 @@ if __name__ == "__main__":
                 continue
 
             hand = Hand(card_number, deck) # Create a hand with the given number of cards
+
+            hand.cards= [Card('8', '♠')]*3 + [Card('Q', '♠')]*2 + [Card('A', '♠')]*3
 
             # Display the unsorted cards
             for card in hand.cards:
