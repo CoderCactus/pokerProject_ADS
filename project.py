@@ -42,7 +42,7 @@ class Deck:
         '''
         for i in range(len(self.cards)):
             randSeed = random.randint(i, len(self.cards) - 1) # Pick a random card index
-            self.cards[i], self.cards[randSeed] = swap(self.cards[i], self.cards[randSeed]) # Swap the current card with the randomly chosen index card
+            self.cards[i], self.cards[randSeed] = self.cards[randSeed], self.cards[i] # Swap the current card with the randomly chosen index card
 
     def drawing(self, card_number):
         '''
@@ -412,14 +412,6 @@ def find_royalFlush(lst):
         if sorted(values) == [10, 11, 12, 13, 14]: # Check if the straight is specifically a royal flush
             output.append((straight, suit)) # Append the value to the output list as a royal flush is found
     return output
-    
-
-def swap(n, m):
-    '''
-    Swaps two values
-    '''
-    return m, n
-
 
 def heapify(array, n, i):
     '''
