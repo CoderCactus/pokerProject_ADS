@@ -59,6 +59,10 @@ Run the Streamlit app:
 ```bash
 streamlit run app.py
 ````
+or
+```bash
+python -m streamlit run app.py
+````
 Your default browser will automatically open with the interface.
 If it doesn’t, copy and paste the URL from the terminal (usually http://localhost:8501).
 
